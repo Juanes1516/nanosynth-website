@@ -2,7 +2,6 @@
       "name": "NanoSynth Mockup Design",
       "version": "0.1.0",
       "private": true,
-      "homepage": "https://juanes1516.github.io/nanosynth-website/",
       "dependencies": {
             "@radix-ui/react-accordion": "^1.2.3",
             "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -52,11 +51,14 @@
       "devDependencies": {
             "@types/node": "^20.10.0",
             "@vitejs/plugin-react-swc": "^3.10.2",
+            "gh-pages": "^6.1.1",
             "vite": "6.3.5"
       },
       "scripts": {
             "dev": "vite",
             "build": "vite build",
-            "preview": "vite preview"
+            "preview": "vite preview",
+            "predeploy": "npm run build",
+            "deploy": "gh-pages -d dist"
       }
 }
