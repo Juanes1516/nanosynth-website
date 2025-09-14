@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { UnifiedNavigation } from './components/UnifiedNavigation';
 import { NewHomePage } from './components/NewHomePage';
 import { SimulationPage } from './components/SimulationPage';
@@ -8,41 +9,29 @@ import { MathematicalModelsPage } from './components/MathematicalModelsPage';
 import { ExperimentalCharacterizationPage } from './components/ExperimentalCharacterizationPage';
 import { AuthorsPage } from './components/AuthorsPage';
 
-export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
-
-  const renderPage = () => {
-    switch (activeTab) {
-      case 'home':
-        return <NewHomePage onNavigate={setActiveTab} />;
-      case 'simulation':
-        return <SimulationPage />;
-      case 'manufacturing':
-        return <ManufacturingPage />;
-      case 'analysis':
-        return <UnifiedAnalysisPage />;
-      case 'mathematical-models':
-        return <MathematicalModelsPage />;
-      case 'experimental-characterization':
-        return <ExperimentalCharacterizationPage />;
-      case 'authors':
-        return <AuthorsPage />;
-      default:
-        return <NewHomePage onNavigate={setActiveTab} />;
-    }
-  };
+function AppContent() {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   return (
     <div className="min-h-screen bg-background">
       {/* Unified Navigation for all pages */}
-      <UnifiedNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      <UnifiedNavigation />
       
-      <main className={activeTab === 'home' ? '' : 'pt-24'}>
-        {renderPage()}
+      <main className={isHomePage ? '' : 'pt-24'}>
+        <Routes>
+          <Route path="/" element={<NewHomePage />} />
+          <Route path="/simulation" element={<SimulationPage />} />
+          <Route path="/manufacturing" element={<ManufacturingPage />} />
+          <Route path="/analysis" element={<UnifiedAnalysisPage />} />
+          <Route path="/mathematical-models" element={<MathematicalModelsPage />} />
+          <Route path="/experimental-characterization" element={<ExperimentalCharacterizationPage />} />
+          <Route path="/authors" element={<AuthorsPage />} />
+        </Routes>
       </main>
       
       {/* Footer - only show for non-home pages */}
-      {activeTab !== 'home' && (
+      {!isHomePage && (
         <footer className="bg-primary text-primary-foreground py-8 mt-16">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -57,30 +46,30 @@ export default function App() {
               <div>
                 <h4 className="font-medium mb-4">Enlaces Rápidos</h4>
                 <nav className="space-y-2">
-                  <button 
-                    onClick={() => setActiveTab('simulation')}
+                  <a 
+                    href="/simulation"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Simulación
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('manufacturing')}
+                  </a>
+                  <a 
+                    href="/manufacturing"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Métodos de Manufactura
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('analysis')}
+                  </a>
+                  <a 
+                    href="/analysis"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Análisis de Datos
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('authors')}
+                  </a>
+                  <a 
+                    href="/authors"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Equipo de Investigación
-                  </button>
+                  </a>
                 </nav>
               </div>
               
@@ -99,5 +88,13 @@ export default function App() {
         </footer>
       )}
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }

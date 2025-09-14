@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface UnifiedNavigationProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-}
-
-export function UnifiedNavigation({ activeTab, onTabChange }: UnifiedNavigationProps) {
+export function UnifiedNavigation() {
   const [scrollY, setScrollY] = useState(0);
+  const location = useLocation();
 
   // Handle scroll effects
   useEffect(() => {
@@ -18,37 +15,37 @@ export function UnifiedNavigation({ activeTab, onTabChange }: UnifiedNavigationP
   }, []);
 
   const navigationItems = [
-    { id: 'home', label: 'Inicio' },
-    { id: 'simulation', label: 'Simulación' },
-    { id: 'manufacturing', label: 'Manufactura' },
-    { id: 'analysis', label: 'Análisis' },
-    { id: 'mathematical-models', label: 'Modelos Matemáticos', multiline: true },
-    { id: 'experimental-characterization', label: 'Caracterización' },
-    { id: 'authors', label: 'Equipo' }
+    { id: '/', label: 'Inicio' },
+    { id: '/simulation', label: 'Simulación' },
+    { id: '/manufacturing', label: 'Manufactura' },
+    { id: '/analysis', label: 'Análisis' },
+    { id: '/mathematical-models', label: 'Modelos Matemáticos', multiline: true },
+    { id: '/experimental-characterization', label: 'Caracterización' },
+    { id: '/authors', label: 'Equipo' }
   ];
 
   return (
     <nav className={`microflow-nav ${scrollY > 50 ? 'scrolled' : ''}`}>
       <div className="nav-container">
-        <div className="logo" onClick={() => onTabChange('home')}>
+        <Link to="/" className="logo">
           <div className="logo-icon">💧</div>
           <span>NanoSynth Labs</span>
-        </div>
+        </Link>
         <ul className="nav-links">
           {navigationItems.map((item) => (
             <li key={item.id}>
-              <a 
-                onClick={() => onTabChange(item.id)}
-                className={`${activeTab === item.id ? 'active' : ''} ${item.multiline ? 'multiline' : ''}`}
+              <Link 
+                to={item.id}
+                className={`${location.pathname === item.id ? 'active' : ''} ${item.multiline ? 'multiline' : ''}`}
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
-        <button className="cta-button" onClick={() => onTabChange('simulation')}>
+        <Link to="/simulation" className="cta-button">
           Comenzar Proyecto
-        </button>
+        </Link>
       </div>
     </nav>
   );

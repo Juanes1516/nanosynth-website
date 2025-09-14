@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import '../styles/NewHomePage.css';
 
-interface NewHomePageProps {
-  onNavigate: (section: string) => void;
-}
-
-export function NewHomePage({ onNavigate }: NewHomePageProps) {
+export function NewHomePage() {
+  const navigate = useNavigate();
   const [scrollY, setScrollY] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const particlesRef = useRef<HTMLDivElement>(null);
@@ -119,13 +117,13 @@ export function NewHomePage({ onNavigate }: NewHomePageProps) {
         <div className="hero-buttons">
           <button 
             className="primary-button"
-            onClick={() => onNavigate('simulation')}
+            onClick={() => navigate('/simulation')}
           >
             Explorar Soluciones →
           </button>
           <button 
             className="secondary-button"
-            onClick={() => onNavigate('manufacturing')}
+            onClick={() => navigate('/manufacturing')}
           >
             ▶ Ver Demo
           </button>
@@ -174,7 +172,7 @@ export function NewHomePage({ onNavigate }: NewHomePageProps) {
               <Button 
                 variant="ghost" 
                 className="feature-button"
-                onClick={() => onNavigate('simulation')}
+                onClick={() => navigate('/simulation')}
               >
                 Explorar →
               </Button>
@@ -186,7 +184,7 @@ export function NewHomePage({ onNavigate }: NewHomePageProps) {
               <Button 
                 variant="ghost" 
                 className="feature-button"
-                onClick={() => onNavigate('manufacturing')}
+                onClick={() => navigate('/manufacturing')}
               >
                 Explorar →
               </Button>
@@ -198,7 +196,7 @@ export function NewHomePage({ onNavigate }: NewHomePageProps) {
               <Button 
                 variant="ghost" 
                 className="feature-button"
-                onClick={() => onNavigate('analysis')}
+                onClick={() => navigate('/analysis')}
               >
                 Explorar →
               </Button>
@@ -210,7 +208,7 @@ export function NewHomePage({ onNavigate }: NewHomePageProps) {
               <Button 
                 variant="ghost" 
                 className="feature-button"
-                onClick={() => onNavigate('authors')}
+                onClick={() => navigate('/authors')}
               >
                 Explorar →
               </Button>
