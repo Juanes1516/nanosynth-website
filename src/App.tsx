@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { UnifiedNavigation } from './components/UnifiedNavigation';
 import { NewHomePage } from './components/NewHomePage';
 import { SimulationPage } from './components/SimulationPage';
@@ -46,30 +46,30 @@ function AppContent() {
               <div>
                 <h4 className="font-medium mb-4">Enlaces Rápidos</h4>
                 <nav className="space-y-2">
-                  <a 
-                    href="/simulation"
+                  <Link 
+                    to="/simulation"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Simulación
-                  </a>
-                  <a 
-                    href="/manufacturing"
+                  </Link>
+                  <Link 
+                    to="/manufacturing"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Métodos de Manufactura
-                  </a>
-                  <a 
-                    href="/analysis"
+                  </Link>
+                  <Link 
+                    to="/analysis"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Análisis de Datos
-                  </a>
-                  <a 
-                    href="/authors"
+                  </Link>
+                  <Link 
+                    to="/authors"
                     className="block text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                   >
                     Equipo de Investigación
-                  </a>
+                  </Link>
                 </nav>
               </div>
               

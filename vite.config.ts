@@ -9,8 +9,8 @@ export default defineConfig(({ command }) => {
   
   return {
     plugins: [react()],
-    // Solo usar el prefijo para producción (GitHub Pages)
-    base: isProduction ? '/nanosynth-website/' : '/',
+    // Usar siempre la raíz para GitHub Pages del usuario
+    base: '/',
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
