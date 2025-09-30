@@ -6,26 +6,39 @@ El problema era que los assets estaban configurados con el base path `/nanosynth
 
 ## Solución Implementada
 
-1. **Corregido el base path en index.html**: Cambiado de `/nanosynth-website/assets/` a `/assets/`
-2. **Creado vite.config.ts**: Configurado con `base: '/'` para futuras construcciones
-3. **Creado .nojekyll**: Para asegurar que GitHub Pages sirva correctamente los archivos estáticos
+1. **Configurar variable VITE_BASE_URL**: Define `/nanosynth-website/` durante los builds destinados a GitHub Pages.
+2. **Actualizado `vite.config.ts`**: Usa `process.env.VITE_BASE_URL ?? '/nanosynth-website/'` como base.
+3. **Agregado `public/404.html`**: Con redirección para soportar recargas de rutas del SPA en GitHub Pages.
+4. **Creado `.nojekyll`**: Para evitar que GitHub Pages procese los archivos con Jekyll.
 
 ## Pasos para Desplegar
 
-1. Hacer commit de los cambios:
+### Para Desarrollo Local:
+```bash
+npm run dev
+```
+Esto abrirá el sitio en `http://localhost:5173/` con el base path `/`
+
+### Para GitHub Pages:
+1. Construir el proyecto con el base path correcto:
+   ```bash
+   npm run build:gh-pages
+   ```
+
+2. Hacer commit de los cambios:
    ```bash
    git add .
    git commit -m "Fix GitHub Pages base path configuration"
    ```
 
-2. Hacer push a la rama gh-pages:
+3. Hacer push a la rama gh-pages:
    ```bash
    git push origin gh-pages
    ```
 
-3. Verificar que el sitio funcione en:
-   - `https://juanes1516.github.io/` (debería mostrar la página completa)
-   - `https://juanes1516.github.io/nanosynth-website/` (también debería funcionar)
+4. Verificar que el sitio funcione en:
+   - `https://juanes1516.github.io/nanosynth-website/` (ruta principal)
+   - Las rutas internas del SPA deberían funcionar correctamente
 
 ## Configuración de GitHub Pages
 
@@ -36,6 +49,9 @@ Asegúrate de que en la configuración de GitHub Pages:
 
 ## Notas Importantes
 
+- **Desarrollo Local**: Usa `npm run dev` - el sitio se sirve desde `/` (raíz)
+- **GitHub Pages**: Usa `npm run build:gh-pages` - el sitio se sirve desde `/nanosynth-website/`
 - El archivo `.nojekyll` es necesario para que GitHub Pages no procese los archivos con Jekyll
-- El `vite.config.ts` asegura que futuras construcciones usen el base path correcto
-- Los assets ahora se cargan desde `/assets/` en lugar de `/nanosynth-website/assets/`
+- El `vite.config.ts` detecta automáticamente el entorno y configura el base path apropiado
+- `public/404.html` permite recargar rutas internas del SPA sin errores 404 en GitHub Pages
+- **IMPORTANTE**: Siempre usa `npm run build:gh-pages` antes de hacer deploy a GitHub Pages
